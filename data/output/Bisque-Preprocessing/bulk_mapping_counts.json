@@ -1,0 +1,7 @@
+{
+  "bulk_total_genes": 18079,
+  "overlap_genes": 12645,
+  "unmapped_genes": 5434,
+  "overlap_file": "bulk_counts_overlap.tsv",
+  "unmapped_file": "bulk_counts_unmapped.tsv"
+}

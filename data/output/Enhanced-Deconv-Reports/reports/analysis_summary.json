@@ -1,0 +1,118 @@
+{
+  "overview": {
+    "total_cell_types": 13,
+    "n_patient_samples": 45,
+    "n_control_samples": 9,
+    "patient_samples": [
+      "WB-2312090003",
+      "WH-2401230003",
+      "JM-2402070001",
+      "AY-2402230001",
+      "RP-2403190005",
+      "MW-2403190010",
+      "CM-2403190012",
+      "HF-2403200009",
+      "LS-2403210007",
+      "VG-2403270009",
+      "JH-2403270011",
+      "GT-2403270013",
+      "JP-2404030013",
+      "MB-2404030014",
+      "RO-2404040005",
+      "MD-2404240003",
+      "CD-2405010006",
+      "NC-2406110009",
+      "SC-2501240001",
+      "ES-2501240011",
+      "AM-2502190008",
+      "CD-2502260006",
+      "MW-2503010003",
+      "HB-2503080013",
+      "DS-2504260005",
+      "SP-2505030001",
+      "RW-2504190007",
+      "AY-2505100001",
+      "MD-2505140007",
+      "WB-2505240010",
+      "CI-2505310003",
+      "JD-2505310009",
+      "RA-2506040002",
+      "CM-2506190001",
+      "MC-2506190003",
+      "MA-2506250016",
+      "NB-2506280003",
+      "KS-2506280009",
+      "GT-2509040001",
+      "EC-2509040003",
+      "RF-2509060008",
+      "HF-2509100003",
+      "RO-2509150003",
+      "PW-2509150011",
+      "SC-2509220001"
+    ],
+    "control_samples": [
+      "Control1",
+      "Control2",
+      "Control3",
+      "Control4",
+      "Control5",
+      "Control6",
+      "Control7",
+      "Control8",
+      "Control9"
+    ]
+  },
+  "major_increases": {
+    "count": 1,
+    "cell_types": [
+      "macrophage"
+    ],
+    "details": {
+      "macrophage": {
+        "Patient_Mean": 0.42830352834540375,
+        "Control_Mean": 0.3705277506027422,
+        "Absolute_Difference": 0.05777577774266157
+      }
+    }
+  },
+  "major_decreases": {
+    "count": 1,
+    "cell_types": [
+      "CD4.positive..alpha.beta.T.cell"
+    ],
+    "details": {
+      "CD4.positive..alpha.beta.T.cell": {
+        "Patient_Mean": 0.14455832170289107,
+        "Control_Mean": 0.2145145710557699,
+        "Absolute_Difference": -0.06995624935287884
+      }
+    }
+  },
+  "absent_in_patient": {
+    "count": 0,
+    "cell_types": []
+  },
+  "unique_to_patient": {
+    "count": 1,
+    "cell_types": [
+      "mast.cell"
+    ]
+  },
+  "statistical_analysis": {
+    "significant_changes": 6,
+    "total_tested": 13,
+    "significant_cell_types": [
+      "CD4.positive..alpha.beta.T.cell",
+      "macrophage",
+      "endothelial.cell",
+      "mast.cell",
+      "neutrophil",
+      "smooth.muscle.cell"
+    ]
+  },
+  "impact_assessment": {
+    "high_impact": 0,
+    "moderate_impact": 2,
+    "high_impact_cell_types": []
+  }
+}

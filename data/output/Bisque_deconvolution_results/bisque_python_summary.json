@@ -1,0 +1,16 @@
+{
+  "ref_dir": "/data/output/Bisque-Preprocessing",
+  "out_dir": "/data/output/Bisque_deconvolution_results",
+  "files": {
+    "bisque_bulk_proportions": "/data/output/Bisque_deconvolution_results/bisque_bulk_proportions.tsv",
+    "bisque_result_rds": "/data/output/Bisque_deconvolution_results/Bisque_result.rds",
+    "bisque_summary_json": "/data/output/Bisque_deconvolution_results/bisque_summary.json",
+    "r_console_log": "/data/output/Bisque_deconvolution_results/R_console.log",
+    "r_stderr_log": "/data/output/Bisque_deconvolution_results/R_stderr.log"
+  },
+  "shape_bisque_bulk_proportions": [
+    54,
+    13
+  ],
+  "index_is_cell_type": true
+}

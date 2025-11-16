@@ -1,0 +1,30 @@
+[build-system]
+requires = ["hatchling>=1.24"]
+build-backend = "hatchling.build"
+
+[project]
+name = "bisque-deconv"
+version = "0.1.0"
+description = "S1→S2→S3 Bisque pipeline (Python + R via rpy2)"
+readme = "README.md"
+requires-python = ">=3.10,<3.14"
+dependencies = [
+  "numpy>=1.24",
+  "pandas>=2.0",
+  "scipy>=1.10",
+  "scanpy>=1.9",
+  "anndata>=0.9",
+  "tqdm",
+  "matplotlib",
+  "seaborn",
+  "statsmodels",
+  "scikit-learn",
+  "scrublet; platform_system != 'Windows' or python_version < '3.13'",
+  "rpy2>=3.5",
+]
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/bisque_deconv"]
+
+[project.scripts]
+bisque-deconv = "bisque_deconv.cli:main"

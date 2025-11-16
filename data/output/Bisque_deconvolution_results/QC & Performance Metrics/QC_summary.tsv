@@ -1,0 +1,7 @@
+Metric	Value
+Median R2 (reconstruction)	0.991
+% samples with R2>0.70	100
+% samples with |sum(props)-1|<=0.05	100
+Residual norm 95th percentile	3014.192
+Residual norm median	1900.077
+Overall verdict	PASS

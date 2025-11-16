@@ -1,0 +1,67 @@
+================================================================================
+ENHANCED BISQUE DECONVOLUTION ANALYSIS REPORT
+================================================================================
+Analysis Date: 2025-11-16T07:46:37.359091
+Analyzer Version: 2.2
+
+1. ANALYSIS OVERVIEW
+------------------------------
+Total Cell Types: 13
+Patient Samples: 45 (WB-2312090003, WH-2401230003, JM-2402070001, AY-2402230001, RP-2403190005, MW-2403190010, CM-2403190012, HF-2403200009, LS-2403210007, VG-2403270009, JH-2403270011, GT-2403270013, JP-2404030013, MB-2404030014, RO-2404040005, MD-2404240003, CD-2405010006, NC-2406110009, SC-2501240001, ES-2501240011, AM-2502190008, CD-2502260006, MW-2503010003, HB-2503080013, DS-2504260005, SP-2505030001, RW-2504190007, AY-2505100001, MD-2505140007, WB-2505240010, CI-2505310003, JD-2505310009, RA-2506040002, CM-2506190001, MC-2506190003, MA-2506250016, NB-2506280003, KS-2506280009, GT-2509040001, EC-2509040003, RF-2509060008, HF-2509100003, RO-2509150003, PW-2509150011, SC-2509220001)
+Control Samples: 9 (Control1, Control2, Control3, Control4, Control5, Control6, Control7, Control8, Control9)
+
+2. MAJOR FINDINGS
+--------------------
+
+TOP INCREASES IN PATIENT:
+  • macrophage: +5.8%
+
+TOP DECREASES IN PATIENT:
+  • CD4.positive..alpha.beta.T.cell: -7.0%
+
+3. STATISTICAL ANALYSIS
+-------------------------
+Significant Changes: 6/13 tested
+
+  • CD4.positive..alpha.beta.T.cell: p=0.016, Δ=-0.070
+  • macrophage: p=0.002, Δ=+0.058
+  • endothelial.cell: p=0.019, Δ=-0.025
+  • mast.cell: p=0.000, Δ=+0.021
+  • neutrophil: p=0.041, Δ=+0.017
+  • smooth.muscle.cell: p=0.049, Δ=+0.015
+
+4. CLINICAL IMPACT ASSESSMENT
+-----------------------------------
+High Impact Changes (>=10%): 0
+Moderate Impact Changes (5%–10%): 2
+
+5. DETAILED COMPARISON (Top 15 by |Δ|)
+-----------------------------------
+Cell Type                           Patient    Control         Difference   P-Value   
+-------------------------------------------------------------------------------------
+CD4.positive..alpha.beta.T.cell     0.145      0.215           -0.070       0.016     
+macrophage                          0.428      0.371           0.058        0.002     
+endothelial.cell                    0.035      0.060           -0.025       0.019     
+mast.cell                           0.021      0.000           0.021        0.000     
+neutrophil                          0.092      0.075           0.017        0.041     
+smooth.muscle.cell                  0.051      0.036           0.015        0.049     
+CD8.positive..alpha.beta.T.cell     0.185      0.195           -0.011       0.417     
+natural.killer.cell                 0.043      0.049           -0.006       0.131     
+vein.endothelial.cell               0.001      0.000           0.001        0.153     
+endothelial.cell.of.artery          0.000      0.000           0.000        1.000     
+capillary.endothelial.cell          0.000      0.000           0.000        1.000     
+fibroblast                          0.000      0.000           0.000        1.000     
+pericyte                            0.000      0.000           0.000        1.000     
+
+6. CLINICAL INTERPRETATION GUIDELINES
+---------------------------------------------
+• Sample quality and processing conditions
+• Disease state and treatment history
+• Tissue type and anatomical location
+• Single-cell reference appropriateness
+• Batch effects and technical confounders
+• Multiple testing correction for p-values
+
+IMPORTANT: Consult with domain experts for clinical significance!
+
+================================================================================

@@ -1,0 +1,16 @@
+{
+  "analysis_date": "2025-11-16T07:46:37.359091",
+  "version": "2.2",
+  "analyzer": "Enhanced BISQUE Deconvolution Analyzer (pkg-fallback)",
+  "input_proportions_path": "/data/output/Bisque_deconvolution_results/Bisque_proportions.csv",
+  "n_cell_types": 13,
+  "n_samples": 54,
+  "input_metadata_path": "/data/Lupus_meta.csv",
+  "grouping": {
+    "mode": "metadata",
+    "sample_col": "sample_id",
+    "condition_col": "condition",
+    "control_label": "Control",
+    "patient_label": "Disease"
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "initial_cells": 276,
+  "initial_genes": 61759,
+  "remove_low_genes": 0,
+  "remove_high_genes": 0,
+  "remove_high_mito": 0,
+  "remove_doublets": 0,
+  "remove_rare_genes": 41401,
+  "final_cells": 276,
+  "final_genes": 20358
+}
