@@ -6,7 +6,6 @@
     <img src="https://img.shields.io/docker/v/sheryar09/bisque-deconv/latest?label=docker%20image" alt="Docker Image Version" />
   </a>
   <a href="https://github.com/shari01/Bisque-Cell-Type-Deconvolution-of-Bulk-RNA-Seq/actions">
-    <img src="https://github.com/shari01/Bisque-Cell-Type-Deconvolution-of-Bulk-RNA-Seq/workflows/Docker%20Image%20CI/badge.svg" alt="CI Status" />
   </a>
 </p>
 
