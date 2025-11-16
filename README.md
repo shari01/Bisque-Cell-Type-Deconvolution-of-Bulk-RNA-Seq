@@ -1,104 +1,271 @@
 <p align="center">
-  <a href="https://hub.docker.com/r/sheryar09/bisque-deconv" target="_blank">
-    <img src="https://img.shields.io/docker/pulls/sheryar09/bisque-deconv.svg" alt="Docker Pulls">
+  <a href="https://hub.docker.com/r/sheryar09/bisque-deconv">
+    <img src="https://img.shields.io/docker/pulls/sheryar09/bisque-deconv.svg" alt="Docker Pulls" />
   </a>
-  <a href="https://hub.docker.com/r/sheryar09/bisque-deconv" target="_blank">
-    <img src="https://img.shields.io/docker/v/sheryar09/bisque-deconv/latest?label=docker%20image" alt="Docker Image Version">
+  <a href="https://hub.docker.com/r/sheryar09/bisque-deconv">
+    <img src="https://img.shields.io/docker/v/sheryar09/bisque-deconv/latest?label=docker%20image" alt="Docker Image Version" />
   </a>
-  <a href="https://github.com/YOUR_GITHUB_USERNAME/bisque-deconv/actions" target="_blank">
-    <img src="https://github.com/YOUR_GITHUB_USERNAME/bisque-deconv/workflows/Docker%20Image%20CI/badge.svg" alt="CI Status">
+  <a href="https://github.com/shari01/Bisque-Cell-Type-Deconvolution-of-Bulk-RNA-Seq/actions">
+    <img src="https://github.com/shari01/Bisque-Cell-Type-Deconvolution-of-Bulk-RNA-Seq/workflows/Docker%20Image%20CI/badge.svg" alt="CI Status" />
   </a>
 </p>
 
-<h1 align="center">bisque-deconv — Bulk RNA-Seq Cell-Type Deconvolution<br>(Python 3.12 + R 4.5 + Bioconductor 3.21)</h1>
+<h1 align="center">bisque-deconv — Bulk RNA-Seq Cell-Type Deconvolution</h1>
+<h3 align="center">Python 3.12 + R 4.5 + Bioconductor 3.21</h3>
 
 <p align="center">
-A full S1→S2→S3 Bisque RNA deconvolution pipeline with Python orchestration and R integration (via rpy2).  
-Provides high-resolution cellular composition estimates, signature matrices, QC diagnostics, and enhanced reporting.
+  A complete S1 → S2 → S3 Bisque RNA deconvolution workflow using Python (Scanpy, AnnData)
+  and R (BisqueRNA via rpy2). Generates cell-type proportions, signature matrices, QC metrics,
+  and enhanced tumor microenvironment (TME) reports from bulk RNA-Seq data.
 </p>
 
-<hr/>
+<hr />
 
-<h2>📦 1) Python Installation</h2>
+<h2>1. Python Installation</h2>
 
-<h3>Virtual environment (recommended)</h3>
+<p><strong>Recommended: use a virtual environment</strong></p>
 
-<pre>
-python -m venv .venv
-. .venv/Scripts/activate      # Windows PowerShell
+<pre><code>python -m venv .venv
+. .venv/Scripts/activate   # Windows PowerShell
 pip install -e .
-</pre>
+</code></pre>
 
-<hr/>
+<hr />
 
-<h2>▶ 2) Run the Pipeline (CLI)</h2>
+<h2>2. Run the Pipeline (CLI)</h2>
 
-<pre>
-python -m bisque_deconv.cli `
-    --ref_h5ad "path/to/reference.h5ad" `
-    --bulk "path/to/bulk.csv" `
-    --bulk_gene_col "Gene" `
-    --metadata "path/to/metadata.csv" `
-    --outdir "outputs/S1" `
-    --s2_outdir "outputs/S2" `
-    --enh_outdir "outputs/S3" `
+<p>Core entry point: <code>python -m bisque_deconv.cli</code></p>
+
+<pre><code>python -m bisque_deconv.cli `
+  --ref_h5ad "path/to/reference.h5ad" `
+  --bulk "path/to/bulk.csv" `
+  --bulk_gene_col "Gene" `
+  --metadata "path/to/metadata.csv" `
+  --outdir "outputs/S1" `
+  --s2_outdir "outputs/S2" `
+  --enh_outdir "outputs/S3" `
+  --species "human"
+</code></pre>
+
+<ul>
+  <li><code>--bulk_gene_col</code> must match the gene column in your bulk expression file (e.g. <code>Gene</code>).</li>
+  <li>Use <strong>either</strong> <code>--ref_h5ad</code> or <code>--root</code> (reference scRNA-seq input).</li>
+</ul>
+
+<hr />
+
+<h2>3. Outputs (S1 → S2 → S3)</h2>
+
+<h3>S1 — Preprocessing (path: <code>--outdir</code>)</h3>
+<ul>
+  <li><code>sc_counts.tsv</code></li>
+  <li><code>sc_metadata.tsv</code></li>
+  <li><code>reference_by_celltype.tsv</code></li>
+  <li><code>markers.tsv</code></li>
+  <li><code>bulk_counts_overlap.tsv</code></li>
+  <li><code>bulk_counts_unmapped.tsv</code></li>
+  <li><code>Bisque_ready.h5ad</code></li>
+</ul>
+
+<h3>S2 — BisqueRNA Deconvolution (path: <code>--s2_outdir</code>)</h3>
+<ul>
+  <li><code>bisque_bulk_proportions.tsv</code> (bulk-level cell-type fractions)</li>
+  <li><code>bisque_sc_proportions.tsv</code> (single-cell level proportions)</li>
+  <li><code>signature_matrix.tsv</code> (cell-type-specific expression signatures)</li>
+  <li><code>pseudobulk_donor_level.tsv</code></li>
+  <li>QC plots and diagnostic summaries</li>
+</ul>
+
+<h3>S3 — Enhanced Reporting (path: <code>--enh_outdir</code>)</h3>
+<ul>
+  <li>Cell-type variability and composition plots</li>
+  <li>Summary reports of deconvolution results</li>
+  <li>Final graphics to support TME interpretation</li>
+</ul>
+
+<hr />
+
+<h2>4. Conceptual Pipeline Overview</h2>
+
+<p>
+  The workflow can be summarized as:
+</p>
+
+<ol>
+  <li><strong>S1 (Preprocessing)</strong>: Harmonize bulk RNA-Seq and reference scRNA-Seq, generate <code>Bisque_ready.h5ad</code>.</li>
+  <li><strong>S2 (Deconvolution)</strong>: Run BisqueRNA to estimate cell-type proportions and build a signature matrix.</li>
+  <li><strong>S3 (Reporting)</strong>: Produce summarized tables and plots for interpretation of the tumor microenvironment.</li>
+</ol>
+
+<p>
+  This design allows you to re-run individual stages (e.g., S2 only) without recomputing the entire pipeline.
+</p>
+
+<hr />
+
+<h2>5. Docker Usage</h2>
+
+<h3>5.1 Build the image</h3>
+
+<pre><code>docker build -t bisque-deconv:latest .
+</code></pre>
+
+<h3>5.2 Run the pipeline using Docker</h3>
+
+<p>
+  Mount your current working directory into <code>/workspace</code> inside the container:
+</p>
+
+<pre><code>docker run --rm -it ^
+  -v "%cd%":/workspace ^
+  bisque-deconv:latest ^
+  python -m bisque_deconv.cli \
+    --ref_h5ad "/workspace/reference.h5ad" \
+    --bulk "/workspace/bulk.csv" \
+    --bulk_gene_col "Gene" \
+    --metadata "/workspace/metadata.csv" \
+    --outdir "/workspace/out/S1" \
+    --s2_outdir "/workspace/out/S2" \
+    --enh_outdir "/workspace/out/S3" \
     --species "human"
-</pre>
+</code></pre>
+
+<p>
+  Inside the container, all paths are Linux-style (e.g. <code>/workspace/...</code>), even when running on Windows.
+</p>
+
+<h3>5.3 Save the Docker image to a local file</h3>
+
+<pre><code>docker save -o bisque-deconv.tar bisque-deconv:latest
+</code></pre>
+
+<h3>5.4 Load the image from a local file</h3>
+
+<pre><code>docker load -i bisque-deconv.tar
+</code></pre>
+
+<hr />
+
+<h2>6. GitHub Actions — Auto-Build Docker Image</h2>
+
+<p>
+  To enable automatic Docker builds and pushes to Docker Hub, create the file:
+  <code>.github/workflows/docker-publish.yml</code>
+</p>
+
+<pre><code>name: Docker Image CI
+
+on:
+  push:
+    branches: ["main", "master"]
+    tags: ["v*"]
+  workflow_dispatch:
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - uses: docker/setup-buildx-action@v3
+
+      - uses: docker/build-push-action@v6
+        with:
+          context: .
+          push: true
+          tags: |
+            sheryar09/bisque-deconv:latest
+            sheryar09/bisque-deconv:${{ github.sha }}
+</code></pre>
+
+<p>
+  In your GitHub repository settings, define the following secrets:
+</p>
 
 <ul>
-<li>The first column in the bulk dataset must match <code>--bulk_gene_col</code>.</li>
-<li>Use <code>--ref_h5ad</code> <strong>or</strong> <code>--root</code>.</li>
+  <li><code>DOCKERHUB_USERNAME</code></li>
+  <li><code>DOCKERHUB_TOKEN</code> (a Docker Hub access token)</li>
 </ul>
 
-<hr/>
+<hr />
 
-<h2>📁 3) Outputs (Expected)</h2>
+<h2>7. R &amp; BisqueRNA Installation (Standalone)</h2>
 
-<h3>S1 — Preprocessing ( <code>--outdir</code> )</h3>
+<p>
+  If you want to run BisqueRNA natively (outside Docker), you can use the following R setup:
+</p>
+
+<pre><code>dir.create(Sys.getenv("R_LIBS_USER"), recursive = TRUE)
+.libPaths(c(Sys.getenv("R_LIBS_USER"), .libPaths()))
+options(repos = c(CRAN = "https://cloud.r-project.org"))
+
+install.packages("pkgbuild")
+pkgbuild::check_build_tools(debug = TRUE)
+
+install.packages("BiocManager")
+BiocManager::install(c("Biobase", "BiocGenerics", "preprocessCore"))
+
+install.packages("remotes")
+remotes::install_github("cozygene/bisque", upgrade = "never")
+
+library(BisqueRNA)
+packageVersion("BisqueRNA")
+</code></pre>
+
+<hr />
+
+<h2>8. Stage-Only Execution</h2>
+
+<p>
+  The CLI allows skipping earlier stages if outputs already exist:
+</p>
+
 <ul>
-  <li>sc_counts.tsv</li>
-  <li>sc_metadata.tsv</li>
-  <li>reference_by_celltype.tsv</li>
-  <li>markers.tsv</li>
-  <li>bulk_counts_overlap.tsv</li>
-  <li>bulk_counts_unmapped.tsv</li>
-  <li>Bisque_ready.h5ad</li>
+  <li><strong>Skip S1 (preprocessing)</strong>, run only S2 + S3:</li>
 </ul>
 
-<h3>S2 — BisqueRNA Deconvolution ( <code>--s2_outdir</code> )</h3>
+<pre><code>python -m bisque_deconv.cli --skip_s1 \
+  --ref_h5ad "reference.h5ad" \
+  --bulk "bulk.csv" \
+  --bulk_gene_col "Gene" \
+  --s2_outdir "out/S2" \
+  --enh_outdir "out/S3" \
+  --species "human"
+</code></pre>
+
 <ul>
-  <li>bisque_bulk_proportions.tsv</li>
-  <li>bisque_sc_proportions.tsv</li>
-  <li>signature_matrix.tsv</li>
-  <li>pseudobulk_donor_level.tsv</li>
-  <li>QC plots</li>
+  <li><strong>Skip S1 and S2</strong>, run only S3 (assuming S1 and S2 outputs already exist):</li>
 </ul>
 
-<h3>S3 — Enhanced Reporting ( <code>--enh_outdir</code> )</h3>
+<pre><code>python -m bisque_deconv.cli --skip_s1 --skip_s2 \
+  --enh_outdir "out/S3" \
+  --species "human"
+</code></pre>
+
+<hr />
+
+<h2>9. Requirements Summary</h2>
+
 <ul>
-  <li>Cell-type variability plots</li>
-  <li>High-level summaries</li>
-  <li>TME composition graphics</li>
-  <li>Final report</li>
+  <li><strong>Python</strong>: 3.12</li>
+  <li><strong>R</strong>: 4.5.1</li>
+  <li><strong>Bioconductor</strong>: 3.21</li>
+  <li><strong>Core Python dependencies</strong>: <code>numpy</code>, <code>pandas</code>, <code>scipy</code>, <code>scanpy</code>, <code>anndata</code>, <code>scikit-learn</code>, <code>rpy2</code>, <code>matplotlib</code>, <code>seaborn</code>, <code>tqdm</code>, <code>statsmodels</code></li>
 </ul>
 
-<hr/>
+<hr />
 
-<h2>🧬 4) Pipeline Diagram</h2>
+<h2>10. Summary</h2>
 
-```mermaid
-flowchart LR
-    A[Bulk RNA-seq + Metadata + scRNA-seq Reference] --> B[S1: Preprocessing<br/>(QC, Alignment, Bisque_ready.h5ad)]
-    B --> C[S2: BisqueRNA Deconvolution<br/>(Proportions, Signature Matrix)]
-    C --> D[S3: Enhanced Reporting<br/>(Plots, Summaries, QC)]
-    D --> E[TME Interpretation / Biological Insights]
-<hr/> <h2>🐋 5) Docker Usage</h2> <h3>Build Docker image</h3> <pre> docker build -t bisque-deconv:latest . </pre> <h3>Run the pipeline using Docker</h3>
-Mount your project directory into <code>/workspace</code>:
-
-<pre> docker run --rm -it ^ -v "%cd%":/workspace ^ bisque-deconv:latest ^ python -m bisque_deconv.cli \ --ref_h5ad "/workspace/reference.h5ad" \ --bulk "/workspace/bulk.csv" \ --bulk_gene_col "Gene" \ --metadata "/workspace/metadata.csv" \ --outdir "/workspace/out/S1" \ --s2_outdir "/workspace/out/S2" \ --enh_outdir "/workspace/out/S3" \ --species "human" </pre> <h3>Save the image to a local .tar file</h3> <pre> docker save -o bisque-deconv.tar bisque-deconv:latest </pre> <h3>Load the image from a .tar file</h3> <pre> docker load -i bisque-deconv.tar </pre> <hr/> <h2>🚀 6) Docker Hub Auto-Build (GitHub Actions)</h2> <p>Create the file: <code>.github/workflows/docker-publish.yml</code></p> <pre> name: Docker Image CI on: push: branches: [ "main", "master" ] tags: [ "v*" ] workflow_dispatch: jobs: build-and-push: runs-on: ubuntu-latest steps: - uses: actions/checkout@v4 - name: Log in to Docker Hub uses: docker/login-action@v3 with: username: ${{ secrets.DOCKERHUB_USERNAME }} password: ${{ secrets.DOCKERHUB_TOKEN }} - uses: docker/setup-buildx-action@v3 - name: Build and push Docker image uses: docker/build-push-action@v6 with: context: . push: true tags: | sheryar09/bisque-deconv:latest sheryar09/bisque-deconv:${{ github.sha }} </pre> <p><b>Note:</b> Add secrets in GitHub → Settings → Secrets → Actions:</p> <ul> <li><code>DOCKERHUB_USERNAME</code></li> <li><code>DOCKERHUB_TOKEN</code></li> </ul> <hr/> <h2>📙 7) Install BisqueRNA (R 4.5 / Bioc 3.21)</h2> <pre> dir.create(Sys.getenv("R_LIBS_USER"), recursive = TRUE) .libPaths(c(Sys.getenv("R_LIBS_USER"), .libPaths())) options(repos = c(CRAN = "https://cloud.r-project.org")) if (!requireNamespace("pkgbuild", quietly = TRUE)) install.packages("pkgbuild") pkgbuild::check_build_tools(debug = TRUE) if (!requireNamespace("BiocManager", quietly = TRUE)) install.packages("BiocManager") BiocManager::install(c("Biobase", "BiocGenerics", "preprocessCore"), ask = FALSE) if (!requireNamespace("remotes", quietly = TRUE)) install.packages("remotes") remotes::install_github("cozygene/bisque", upgrade = "never", build_vignettes = FALSE) library(BisqueRNA) print(packageVersion("BisqueRNA")) </pre> <hr/> <h2>🧩 8) Stage-Only Execution</h2>
-Run only S2:
-
-<pre> python -m bisque_deconv.cli --skip_s1 \ --ref_h5ad "reference.h5ad" \ --bulk "bulk.csv" \ --bulk_gene_col "Gene" \ --s2_outdir "out/S2" \ --species human </pre>
-Run only S3:
-
-<pre> python -m bisque_deconv.cli --skip_s1 --skip_s2 ... </pre> <hr/> <h2>📌 9) Requirements</h2> <ul> <li>Python 3.12</li> <li>R 4.5.1</li> <li>Bioconductor 3.21</li> <li>Dependencies: anndata, scanpy, numpy, pandas, rpy2, scikit-learn</li> </ul> <hr/> <h2>✔ Summary</h2> <p> <b>bisque-deconv</b> provides a robust, reproducible, and fully containerized workflow for cell-type deconvolution of bulk RNA-Seq data, integrating modern Python tooling with the BisqueRNA R package to produce high-quality TME profiles and biological insights. </p> ```
+<p>
+  <strong>bisque-deconv</strong> provides a robust, reproducible, and container-friendly pipeline for
+  cell-type deconvolution of bulk RNA-Seq data using BisqueRNA. It integrates modern Python tooling
+  (Scanpy, AnnData) with R-based deconvolution, producing publication-ready outputs for TME analysis
+  and cell-type composition profiling.
+</p>
