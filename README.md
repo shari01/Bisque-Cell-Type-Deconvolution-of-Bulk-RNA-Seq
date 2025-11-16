@@ -13,7 +13,7 @@
 <h3 align="center">Python 3.12 + R 4.5 + Bioconductor 3.21</h3>
 
 <p align="center">
-  A complete S1 → S2 → S3 Bisque RNA deconvolution workflow using Python (Scanpy, AnnData)
+  Bisque RNA deconvolution workflow using Python (Scanpy, AnnData)
   and R (BisqueRNA via rpy2). Generates cell-type proportions, signature matrices, QC metrics,
   and enhanced tumor microenvironment (TME) reports from bulk RNA-Seq data.
 </p>
